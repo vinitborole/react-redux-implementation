@@ -14,15 +14,10 @@ const Item = styled("div")(({ theme }) => ({
 }));
 
 class DashboardPage extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  componentDidMount() {}
-
-  componentDidUpdate() {}
-
-  componentWillUnmount() {}
+  // commented as of build error - unused constructor
+  // constructor(props) {
+  //   super(props);
+  // }
 
   render() {
     return (

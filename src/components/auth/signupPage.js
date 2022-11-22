@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Helmet } from "react-helmet-async";
 
 import { styled } from "@mui/material/styles";
-import {  Container, Typography } from "@mui/material";
+import { Container, Typography } from "@mui/material";
 
 import SignupForm from "./signupForm";
 import { Link } from "react-router-dom";
@@ -32,15 +32,10 @@ const StyledContent = styled("div")(({ theme }) => ({
   padding: theme.spacing(12, 0),
 }));
 class SignupPage extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  componentDidMount() {}
-
-  componentDidUpdate() {}
-
-  componentWillUnmount() {}
+  // commented as of build error - unused constructor
+  // constructor(props) {
+  //   super(props);
+  // }
 
   render() {
     return (

@@ -10,7 +10,6 @@ import {
   IconButton,
   Popover,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/auth/auth";
 
