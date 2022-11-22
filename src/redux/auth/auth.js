@@ -83,7 +83,7 @@ const authSlice = createSlice({
         state.isAuthenticated = false;
         localStorage.setItem("profile", action.payload.token);
         state.user = {};
-        state.error = "unable to login properly.";
+        state.error = "unable to register properly.";
       }
     },
     [register.rejected]: (state, action) => {
