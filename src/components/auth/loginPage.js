@@ -2,16 +2,9 @@ import React, { Component } from "react";
 import { Helmet } from "react-helmet-async";
 
 import { styled } from "@mui/material/styles";
-import {
-  Link,
-  Container,
-  Typography,
-  Divider,
-  Stack,
-  Button,
-} from "@mui/material";
+import { Container, Typography, Divider } from "@mui/material";
 import LoginForm from "./loginForm";
-
+import { Link } from "react-router-dom";
 const StyledRoot = styled("div")(({ theme }) => ({
   [theme.breakpoints.up("md")]: {
     display: "flex",
@@ -45,13 +38,9 @@ class LoginPage extends Component {
 
   componentDidMount() {}
 
-  componentDidUpdate() {
-    console.log("login updated");
-  }
+  componentDidUpdate() {}
 
-  componentWillUnmount() {
-    console.log("login will unmount");
-  }
+  componentWillUnmount() {}
 
   render() {
     return (
@@ -73,7 +62,7 @@ class LoginPage extends Component {
 
               <Typography variant="body2" sx={{ mb: 5 }}>
                 Don’t have an account? {""}
-                <Link href={`/signup`} variant="subtitle2">
+                <Link to={`/signup`} variant="subtitle2">
                   Get started
                 </Link>
               </Typography>

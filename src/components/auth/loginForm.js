@@ -2,11 +2,21 @@ import React, { Component } from "react";
 import * as Yup from "yup";
 import { Form, Formik } from "formik";
 import { LoadingButton } from "@mui/lab";
-import { IconButton, InputAdornment, Stack, TextField } from "@mui/material";
+import {
+  Button,
+  Divider,
+  IconButton,
+  InputAdornment,
+  Snackbar,
+  Stack,
+  TextField,
+} from "@mui/material";
 import { Icon } from "@iconify/react";
 import eyeFill from "@iconify/icons-eva/eye-fill";
 import eyeOffFill from "@iconify/icons-eva/eye-off-fill";
-
+import { connect } from "react-redux";
+import { login } from "../../redux/auth/auth";
+import { Navigate } from "react-router-dom";
 const LoginSchema = Yup.object().shape({
   email: Yup.string()
     .email("Email must be a valid email address")
@@ -19,35 +29,42 @@ class LoginForm extends Component {
     super(props);
     this.state = {
       showPassword: false,
+      initialValues: { email: "", password: "" },
     };
-    this.initialValues = { email: "", password: "" };
+    // this.initialValues = { email: "", password: "" };
   }
 
-  validate = (values) => {
-    const errors = {};
-    if (!values.email) {
-      errors.email = "Required";
-    }
-    if (!values.password) {
-      errors.password = "Required";
-    }
-    return errors;
-  };
-
   handleSubmit = (values, setSubmitting) => {
-    setTimeout(() => {
-      alert(JSON.stringify(values, null, 2));
-      setSubmitting(false);
-    }, 400);
+    this.props.login({ values });
+    setSubmitting(false);
   };
 
   render() {
     return (
       <div id="loginForm">
+        {this.props.isAuthenticated && <Navigate to="/app" replace={true} />}
+        <Button
+          onClick={() =>
+            this.setState({
+              ...this.state,
+              initialValues: {
+                email: "eve.holt@reqres.in",
+                password: "cityslicka",
+              },
+            })
+          }
+          fullWidth
+          size="large"
+          color="inherit"
+          variant="outlined"
+        >
+          Fill Dummy Login Details
+        </Button>
+        <Divider sx={{ my: 3 }}></Divider>
         <Formik
-          initialValues={this.initialValues}
-          //   validate={(values) => this.validate(values)}
+          initialValues={this.state.initialValues}
           validationSchema={LoginSchema}
+          enableReinitialize={true}
           onSubmit={(values, { setSubmitting }) =>
             this.handleSubmit(values, setSubmitting)
           }
@@ -110,8 +127,21 @@ class LoginForm extends Component {
             </Form>
           )}
         </Formik>
+        <Snackbar
+          anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+          open={this.props.error ? true : false}
+          autoHideDuration={6000}
+          message={this.props.error}
+        />
       </div>
     );
   }
 }
-export default LoginForm;
+
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+  loading: state.auth.loading,
+  error: state.auth.error,
+});
+const mapDispatchToProps = { login };
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

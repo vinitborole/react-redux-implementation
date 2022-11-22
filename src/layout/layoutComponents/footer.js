@@ -1,5 +1,4 @@
 import * as React from "react";
-import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
@@ -9,8 +8,8 @@ function Copyright() {
   return (
     <Typography variant="body2" color="text.secondary" align="center">
       {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      <Link color="inherit" href="#">
+        React Redux Toolkit
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -23,7 +22,7 @@ function Footer() {
     <Box component="footer" sx={{ bgcolor: "background.paper", py: 6 }}>
       <Container maxWidth="lg">
         <Typography variant="h6" align="center" gutterBottom>
-          foooo tee r
+          Awesome Footer
         </Typography>
         <Typography
           variant="subtitle1"
@@ -31,7 +30,7 @@ function Footer() {
           color="text.secondary"
           component="p"
         >
-          his is footer bawa
+          This is company description.
         </Typography>
         <Copyright />
       </Container>

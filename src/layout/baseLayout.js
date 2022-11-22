@@ -1,10 +1,11 @@
 import styled from "@emotion/styled";
-import React, { useState } from "react";
+import React from "react";
 import { Outlet } from "react-router-dom";
 import Footer from "./layoutComponents/footer";
 import Header from "./layoutComponents/header";
 const APP_BAR_MOBILE = 50;
 const APP_BAR_DESKTOP = 50;
+ 
 
 const Main = styled("div")(({ theme }) => ({
   flexGrow: 1,
@@ -20,12 +21,13 @@ const Main = styled("div")(({ theme }) => ({
   },
 }));
 
-export default function BaseLayout(props) {
+export default function BaseLayout() {
   return (
     <>
       <Header />
       <Main>
         <Outlet />
+       
       </Main>
       <Footer />
     </>

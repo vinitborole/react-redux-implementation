@@ -3,15 +3,20 @@ import * as Yup from "yup";
 import { Form, Formik } from "formik";
 import { LoadingButton } from "@mui/lab";
 import {
+  Button,
   Divider,
   IconButton,
   InputAdornment,
+  Snackbar,
   Stack,
   TextField,
 } from "@mui/material";
 import { Icon } from "@iconify/react";
 import eyeFill from "@iconify/icons-eva/eye-fill";
 import eyeOffFill from "@iconify/icons-eva/eye-off-fill";
+import { register } from "../../redux/auth/auth";
+import { Navigate } from "react-router-dom";
+import { connect } from "react-redux";
 
 const RegisterSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -36,28 +41,47 @@ class SignupForm extends Component {
     super(props);
     this.state = {
       showPassword: false,
-    };
-    this.initialValues = {
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: "",
-      confirm: "",
+      initialValues: {
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+        confirm: "",
+      },
     };
   }
 
   handleSubmit = (values, setSubmitting) => {
-    setTimeout(() => {
-      alert(JSON.stringify(values, null, 2));
-      setSubmitting(false);
-    }, 400);
+    console.log(values);
+    this.props.register({ values });
+    setSubmitting(false);
   };
 
   render() {
     return (
       <div id="signupForm">
+        {this.props.isAuthenticated && <Navigate to="/app" replace={true} />}
+        <Button
+          onClick={() =>
+            this.setState({
+              ...this.state,
+              initialValues: {
+                ...this.state.initialValues,
+                email: "eve.holt@reqres.in",
+              },
+            })
+          }
+          fullWidth
+          size="large"
+          color="inherit"
+          variant="outlined"
+        >
+          Use Dummy Allowed Email
+        </Button>
+        <Divider sx={{ my: 3 }}></Divider>
         <Formik
-          initialValues={this.initialValues}
+          initialValues={this.state.initialValues}
+          enableReinitialize={true}
           validationSchema={RegisterSchema}
           onSubmit={(values, { setSubmitting }) =>
             this.handleSubmit(values, setSubmitting)
@@ -149,8 +173,20 @@ class SignupForm extends Component {
             </Form>
           )}
         </Formik>
+        <Snackbar
+          anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+          open={this.props.error ? true : false}
+          autoHideDuration={6000}
+          message={this.props.error}
+        />
       </div>
     );
   }
 }
-export default SignupForm;
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+  loading: state.auth.loading,
+  error: state.auth.error,
+});
+const mapDispatchToProps = { register };
+export default connect(mapStateToProps, mapDispatchToProps)(SignupForm);
